@@ -1,0 +1,47 @@
+# This is a comment. YAML is highly readable and relies on indentation.
+name: Node.js CI Build
+
+# The 'on' key defines the triggers for this workflow
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+
+# Environment variables available to all jobs
+env:
+  NODE_ENV: test
+  DEBUG_MODE: false
+
+jobs:
+  build-and-test:
+    name: Build and Run Tests
+    runs-on: ubuntu-latest
+
+    # A list of steps to execute sequentially
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js Environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20.x"
+          cache: "npm"
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Run Linter
+        run: npm run lint
+        continue-on-error: true # Boolean value
+
+      - name: Execute Test Suite
+        run: npm test
+        env:
+          # Overriding the global env variable for this specific step
+          DEBUG_MODE: true
+          DB_CONNECTION_STRING: ${{ secrets.TEST_DB_URL }}

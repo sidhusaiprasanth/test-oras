@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sample-app-config
+  labels:
+    app: sample-app
+data:
+  APP_ENV: "dev"
+  LOG_LEVEL: "info"
+  SERVER_PORT: "80"
+  CACHE_TTL: "300"
