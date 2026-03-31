@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: ghcr.io/sidhusaiprasanth/myapp
+    repoURL: ghcr.io/sidhusaiprasanth/test-oras/myapp
     targetRevision: v1
     path: .
   destination:
